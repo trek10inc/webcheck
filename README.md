@@ -2,7 +2,8 @@
 This Docker container acts as a URL check mechanism for container orchestration systems. The container is meant to be run as Kubernetes job. Once activated, the image will perform basic GET requests to a URL and exit with a return code of zero if a series of successful responses are received.
 
 This container is configured via the use of the following environment variables.
-- **INTERVAL**: How frequently (in seconds) do we run a check**COUNT**: Number of checks to run. If set to value greater than zero, DURATION is ignored
+- **INTERVAL**: How frequently (in seconds) do we run a check
+- **COUNT**: Number of checks to run. If set to value greater than zero, DURATION is ignored
 - **MAX_DURATION**: Set max duration to limit check script to a specific duration if COUNT is used
 - **DURATION**: How long (in seconds) does the job run if COUNT is not used
 - **FAILURE_LIMIT**: How many failures the check script is willing to tolerate before exiting with a non-zero return code
