@@ -26,3 +26,35 @@ A good reference for setting environments variables for containers can be found 
 This container was built to accompany a blog post related to using Argo Rollouts to revert failed Kubernetes deployments. Please reference the following link for more specifics on how it is used.
 
 [Exploring GitOps with Argo Part 2](https://www.trek10.com/blog/exploring-gitops-with-argo-part-2)
+
+An example of a job that utlizes this container looks like the following.
+
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: rollout-webcheck-job
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          name: rollout-webcheck-job
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: webcheck
+            image: public.ecr.aws/i4a3l2a7/webcheck:latest
+            env:
+            - name: URL
+              value: 'http://192.168.0.161:30090/healthz'
+            - name: INTERVAL
+              value: '5'
+            - name: DURATION
+              value: '300'
+            - name: FAILURE_LIMIT
+              value: '5'
+            - name: JQ_PARSER
+              value: '.status'
+            - name: EXPECTED_RESPONSE
+              value: 'ok'
+            - name: TIMEOUT
+              value: '3'
